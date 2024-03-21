@@ -79,3 +79,9 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+<!-- To run docker-compose kubakoresha podman  -->
+pip install podman-compose
+
+<!-- so ku building code ziri muri docker-compose -->
+podman-compose up or podman-compose build
