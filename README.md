@@ -1,13 +1,13 @@
 # docker-work
 
-<!-- you have to create entrypoint.sh file to store command you want to run at first time running image -->
+you have to create entrypoint.sh file to store command you want to run at first time running image 
 
 #!/bin/bash
 python manage.py migrate --no-input
 
 exec "$@"
 
-<!-- In Dockerfile \*In root directory of project -->
+In Dockerfile \*In root directory of project 
 
 FROM python:alpine3.19
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -23,7 +23,7 @@ ENTRYPOINT ["sh","entrypoint.sh"]
 
 This is only for main application of django
 
-<!-- In  docker-compose.yml file -->
+In  docker-compose.yml file 
 
 version: "3.8" //version of docker-compose
 services:
@@ -38,7 +38,7 @@ services:
         depends_on: 
             - db //this webapp is dependent on database
 
-<!-- services of postgres database -->
+services of postgres database
 
     db:
         image: postgres:latest
@@ -52,7 +52,7 @@ services:
         ports:
             - "5432:5432" //mapping port to default port of the database (5432)
 
-<!-- if you want to see your database graphically by using pgadmin4 -->
+if you want to see your database graphically by using pgadmin4 
 
     pgadmin:
         image: dpage/pgadmin4
@@ -68,9 +68,9 @@ services:
 volumes:
 postgres_data:
 
-<!-- volume to store your data from database when container is siced or stopped -->
+volume to store your data from database when container is siced or stopped 
 
-<!-- In main app in settings.py put this postgresql configuration to replace sqlite3's -->
+In main app in settings.py put this postgresql configuration to replace sqlite3's 
 
 DATABASES = {
     'default': {
@@ -83,8 +83,8 @@ DATABASES = {
     }
 }
 
-<!-- To run docker-compose kubakoresha podman  -->
+To run docker-compose kubakoresha podman  
 pip install podman-compose
 
-<!-- so ku building code ziri muri docker-compose -->
+ so ku building code ziri muri docker-compose 
 podman-compose up or podman-compose build
