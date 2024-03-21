@@ -27,13 +27,16 @@ This is only for main application of django
 
 version: "3.8" //version of docker-compose
 services:
-name_of_app:
-container_name: container_name
-build: location_of_Dockerfile
-command: python manage.py runserver 0.0.0.0:8000
-volumes: - .:/name_of_app/
-ports: - "8080:8000" //mapping port to container
-depends_on: - db //this webapp is dependent on database
+    name_of_app:
+        container_name: container_name
+        build: location_of_Dockerfile
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes: 
+            - .:/name_of_app/
+        ports: 
+            - "8080:8000" //mapping port to container
+        depends_on: 
+            - db //this webapp is dependent on database
 
 <!-- services of postgres database -->
 
