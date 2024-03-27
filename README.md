@@ -118,6 +118,8 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
+
+
 in Dockerfile
 ============
 FROM nginx:1.25
