@@ -88,3 +88,58 @@ pip install podman-compose
 
  so ku building code ziri muri docker-compose 
 podman-compose up or podman-compose build
+
+
+NGINX CONFIGRATIONS
+====================
+
+create directory call it nginx
+=> inside create 2 file: Dockerfile and nginx.conf
+in ngnix.conf
+=============
+
+upstream django_app {
+    server name_of_app_service:8000;
+}
+
+
+server {
+      listen 80;
+
+     location /static/ {
+        alias /location of your static directory/;
+    }
+
+    location / {
+        proxy_pass http://django_app;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+in Dockerfile
+============
+FROM nginx:1.25
+
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d
+
+Make change also in docker-compose.yml file by adding this service tooo
+=======================================================================
+  nginx:
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/static/
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
+
+
+Then in django app in settings.py make sure to add STATIC_ROOT directory to collect static in
